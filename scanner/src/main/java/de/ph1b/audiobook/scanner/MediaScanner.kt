@@ -106,7 +106,21 @@ class MediaScanner
       if (f.isFile && f.canRead()) {
         checkBook(f, Book.Type.COLLECTION_FILE)
       } else if (f.isDirectory && f.canRead()) {
-        checkBook(f, Book.Type.COLLECTION_FOLDER)
+        var queue = mutableListOf(f)
+        var visited = mutableListOf<File>()
+        while (queue.isNotEmpty()) {
+          val currentNode = queue.removeFirst()
+          if (visited.contains(currentNode)) {
+            continue
+          }
+          visited.add(currentNode)
+          val subDirectories = currentNode.listFiles(File::isDirectory)
+          if (subDirectories.isEmpty()) {
+            checkBook(currentNode, Book.Type.SINGLE_FOLDER)
+          } else {
+            queue.addAll(subDirectories)
+          }
+        }
       }
     }
   }
