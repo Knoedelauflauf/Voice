@@ -30,6 +30,8 @@
     <string name="change_book_name">Name</string>
     <string name="download_book_cover">Cover (Internet)</string>
     <string name="pick_book_cover">Cover (Lokal)</string>
+    <string name="mark_as_complete">Als beendet markieren</string>
+    <string name="mark_as_not_started">Als nicht abgeschlossen markieren</string>
     <string name="edit_book_title">Buch bearbeiten</string>
     <!--JumpToPosition-->
     <string name="action_time_change">Zu Stelle springen</string>
