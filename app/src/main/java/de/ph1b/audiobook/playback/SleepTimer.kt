@@ -69,7 +69,7 @@ class SleepTimer
       withTimeout(shakeToResetTime) {
         shakeDetector.detect().first()
         Timber.i("Shake detected. Reset sleep time")
-        playerController.play()
+        playerController.cancelFadeout()
         start()
       }
       Timber.i("exiting")
@@ -78,16 +78,12 @@ class SleepTimer
 
   private suspend fun startSleepTimerCountdown() {
     val interval = 500.milliseconds
-    var fadeOutSent = false
     while (leftSleepTime > Duration.ZERO) {
       suspendUntilPlaying()
       delay(interval)
       leftSleepTime = (leftSleepTime - interval).coerceAtLeast(Duration.ZERO)
-      if (leftSleepTime <= FADE_OUT_DURATION && !fadeOutSent) {
-        fadeOutSent = true
-        playerController.fadeOut()
-      }
     }
+    playerController.fadeOut()
   }
 
   private suspend fun suspendUntilPlaying() {
